@@ -1,3 +1,6 @@
+" Execute vim pathogen plugin to load all other plugins in the 'bundles' folder
+execute pathogen#infect()
+
 " get rid of Vi compatibility mode. SET FIRST!
 set nocompatible          
 
@@ -54,3 +57,15 @@ set smarttab
 
 " don't wrap text
 set nowrap                
+
+" Swap colon and semi-color since the former is used much more often
+nnoremap ; :
+nnoremap : ;
+vnoremap ; :
+vnoremap : ;
+
+" * * * Vim Plugin Settings * * *
+
+" NerdTree
+" ...Run NerdTree if vim is run without any arguments
+autocmd vimenter * if !argc() | NERDTree | endif
