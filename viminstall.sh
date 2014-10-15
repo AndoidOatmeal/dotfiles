@@ -9,9 +9,6 @@
 # wget --no-check-certificate https://raw.githubusercontent.com/AndoidOatmeal/dotfiles/master/viminstall.sh -O - | sh
 #
 
-# Abort the script if an error occurs at any point
-set -e
-
 DOTFILES_DIR=~/dotfiles
 VIMRC_PATH=~/.vimrc
 VIM_DIR=~/.vim
