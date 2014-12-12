@@ -4,9 +4,9 @@
 # as a oneliner with the following commands:
 #
 # Using curl:
-# curl -L https://raw.githubusercontent.com/AndoidOatmeal/dotfiles/master/viminstall.sh | sh
+# curl -L https://raw.githubusercontent.com/AndroidOatmeal/dotfiles/master/viminstall.sh | sh
 # Using wget:
-# wget --no-check-certificate https://raw.githubusercontent.com/AndoidOatmeal/dotfiles/master/viminstall.sh -O - | sh
+# wget --no-check-certificate https://raw.githubusercontent.com/AndroidOatmeal/dotfiles/master/viminstall.sh -O - | sh
 #
 
 DOTFILES_DIR=~/dotfiles
@@ -16,7 +16,7 @@ VIM_DIR=~/.vim
 # Clone this git repo
 echo -e "Cloning 'dotfiles' repo...\n"
 rm -rf "$DOTFILES_DIR"
-git clone https://github.com/AndoidOatmeal/dotfiles.git "$DOTFILES_DIR"
+git clone https://github.com/AndroidOatmeal/dotfiles.git "$DOTFILES_DIR"
 
 # Move aside any existing vim setup
 if [[ -e "$VIMRC_PATH" || -L "$VIMRC_PATH" ]]; then
