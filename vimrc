@@ -5,6 +5,7 @@ filetype off
 
 " Set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
+" Keep Plugin commands between vundle#begin/end.
 call vundle#begin()
 
 " Let Vundle manage Vundle, required
@@ -31,6 +32,9 @@ Plugin 'junegunn/seoul256.vim'
 Plugin 'morhetz/gruvbox'
 Plugin 'w0ng/vim-hybrid'
 
+" Use * on visually selected text to search for it
+Plugin 'bronson/vim-visual-star-search'
+
 " Lightweight vim status bar
 Plugin 'bling/vim-airline'
 
@@ -48,9 +52,6 @@ Plugin 'majutsushi/tagbar'
 
 " Color nested matching parentheses with different colors
 Plugin 'kien/rainbow_parentheses.vim'
-
-" Always insert or delete brackets, parens, quotes in pairs
-Plugin 'jiangmiao/auto-pairs'
 
 " A much faster replacement for 99% of the uses of grep
 Plugin 'rking/ag.vim'
@@ -96,9 +97,6 @@ set mouse=a
 set exrc		" Enable per-directory .vimrc files
 set secure		" disable unsafe commands in local .vimrc files
 
-" Auto change directory to the current directory
-set autochdir
-
 " Dont ask to re-read files changed outside vim
 set autoread
 
@@ -108,10 +106,8 @@ let mapleader = " "
 " Useful shortcuts with leader
 nnoremap <leader>t :TagbarToggle<cr>
 nnoremap <leader>n :NERDTreeToggle<CR>
-nnoremap <Leader>a :Ag --scala  ~/pt-software<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 nnoremap <Leader>p :CtrlP<CR>
 nnoremap <Leader>P :CtrlP ~/pt-software/<CR>
-nnoremap <Leader>g :vimgrep
 nnoremap <Leader>c :copen<CR>
 nnoremap <Leader>C :cclose<CR>
 nnoremap <Leader>i :set invnumber<CR>
@@ -121,6 +117,8 @@ nnoremap <Leader>h <C-w>h
 nnoremap <Leader>j <C-w>j
 nnoremap <Leader>k <C-w>k
 nnoremap <Leader>l <C-w>l
+
+vnoremap <Leader>s :w !scala
 
 nnoremap <Leader>H <C-w>H
 nnoremap <Leader>J <C-w>J
@@ -133,7 +131,9 @@ nnoremap <Leader>- <C-w>-
 nnoremap <Leader>= <C-w>+
 
 nnoremap <Leader>f :cnext<CR>
+nnoremap <Leader>F :cnfile<CR>
 nnoremap <Leader>b :cprev<CR>
+nnoremap <Leader>B :cpfile<CR>
 
 nnoremap <silent> <UP> :copen<CR>
 nnoremap <silent> <DOWN> :cclose<CR>
@@ -207,15 +207,22 @@ let g:hardtime_default_on = 1
 let g:hardtime_timeout = 500
 
 " Misc. formatting
-set showmatch
 filetype indent on
 filetype on
+filetype plugin indent on
+set autoindent
+set hlsearch
+set linebreak
 set number
 set relativenumber
+set showmatch
 syntax on
 
+" Highlight the current line
+set cursorline
+
 " Gruvbox colorscheme options
-let g:gruvbox_contrast_dark = "soft"
+let g:gruvbox_contrast_dark="soft"
 
 " Gruvbox's italics go wonky outside of the GUI vim
 if !has("gui_running")
@@ -230,12 +237,6 @@ hi scalaClass cterm=bold
 hi scalaObject cterm=bold
 hi scalaTrait cterm=bold
 hi CursorLineNR cterm=bold
-
-filetype plugin indent on
-set autoindent
-set si
-set hls
-set lbr
 
 " Use tabs instead of spaces
 set tabstop=4
@@ -294,15 +295,6 @@ let g:ctrlp_working_path_mode = 'acr'
 let g:ctrlp_match_window_bottom = 1
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class,*.tar.gz,*.tgz,*.tar,*.gzip,*.jar
-" Sane Ignore For ctrlp
-  " \ 'dir':  '\.git$\|\.hg$\|\.svn$\|target\|\.yardoc\|public\/images\|public\/system\|data\|log\|tmp$',
-" let g:ctrlp_custom_ignore = {
-"   \ 'dir':  '\.hg$\|\.svn$\|target\|\.yardoc\|public\/images\|public\/system\|data\|log\|tmp$',
-"   \ 'file': '\.exe$\|\.so$\|\.dat$'
-"   \ }
-
-set makeprg=mvn\ clean\ install
-set errorformat=\[ERROR]\ %f:%l:\ %m,%-G%.%#
 
 " Always show status line
 set laststatus=2
@@ -361,11 +353,6 @@ set hidden
 " Don't conceal in vim-json
 let g:vim_json_syntax_conceal = 0
 
-" " Powerline setup
-" python from powerline.vim import setup as powerline_setup
-" python powerline_setup()
-" python del powerline_setup
-
 " Create a command for formatting pipe delimited files
 command Pipef execute "%!column -s '|' -t"
 command Tabf execute "%!column -s '\t' -t"
@@ -373,5 +360,15 @@ command Tabf execute "%!column -s '\t' -t"
 " Use sudo to write the file even if vim wasn't run with sudo
 command Swrite execute "w !sudo tee > /dev/null %"
 
-" Highlight the current line
-set cursorline
+" Custom function to populate the argslist with files in the quickfix list
+" Usage can be found here:
+" http://vimcasts.org/episodes/project-wide-find-and-replace/
+command! -nargs=0 -bar Qargs execute 'args' QuickfixFilenames()
+function! QuickfixFilenames()
+  " Building a hash ensures we get each buffer only once
+  let buffer_numbers = {}
+  for quickfix_item in getqflist()
+    let buffer_numbers[quickfix_item['bufnr']] = bufname(quickfix_item['bufnr'])
+  endfor
+  return join(map(values(buffer_numbers), 'fnameescape(v:val)'))
+endfunction
