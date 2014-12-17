@@ -140,6 +140,8 @@ nnoremap <silent> <DOWN> :cclose<CR>
 nnoremap <silent> <RIGHT> :cnext<CR>
 nnoremap <silent> <LEFT> :cprev<CR>
 
+nnoremap <Leader>g :GundoToggle<CR>
+
 " Neocomplete settings
 let g:neocomplete#enable_at_startup = 1
 " <TAB>: completion.
@@ -217,6 +219,9 @@ set number
 set relativenumber
 set showmatch
 syntax on
+
+" Override scala.vim's tabstop of 2 spaces
+au BufNewFile,BufRead *.scala set sw=4
 
 " Highlight the current line
 set cursorline
