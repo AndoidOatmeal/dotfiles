@@ -169,6 +169,9 @@ if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
 
+" If editing a scala file, set the makeprg to compile with maven
+au BufNewFile,BufRead *.scala set makeprg=mvn\ clean\ install
+
 " Use Honza's snippets, not default ones
 let g:neosnippet#disable_runtime_snippets = { "_": 1, }
 " Enable snipMate compatibility feature.
