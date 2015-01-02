@@ -6,7 +6,7 @@ JOBS_COLOR=$FG[012]%B
 function precmd {
      # check if jobs are executing
     if [[ $(jobs | wc -l) -gt 0 ]]; then
-        JOBS=" ${JOBS_COLOR}[%j] "
+        JOBS=" ${JOBS_COLOR}[%j]"
     else
         JOBS=""
     fi
@@ -22,7 +22,7 @@ setprompt () {
     CURR_DIR_COLOR=$FG[014]
 
     PROMPT='
-%{$USER_INFO_COLOR%}%B%n@%m%b${JOBS}%{$reset_color%}%{$CURR_DIR_COLOR%}%B${PWD/#$HOME/~}%b%{$reset_color%}
+%{$USER_INFO_COLOR%}%B%n@%m%b${JOBS}%{$reset_color%} %{$CURR_DIR_COLOR%}%B${PWD/#$HOME/~}%b%{$reset_color%}
 $(git_prompt_info)%(!.#.$) '
     RPROMPT='[%*]'
 
