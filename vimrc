@@ -321,6 +321,9 @@ set showcmd
 set ignorecase
 set smartcase
 
+" Vim keeps 50 commands in history(`q:` in normal mode.) Let's bump this to 1000.
+set history=1000
+
 " Show “invisible” characters
 set listchars=tab:▸\ ,trail:·,eol:¬,nbsp:_
 set list
