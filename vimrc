@@ -226,8 +226,12 @@ syntax on
 " Override scala.vim's tabstop of 2 spaces
 au BufNewFile,BufRead *.scala set sw=4
 
-" Highlight the current line
-set cursorline
+" Gruvbox doesn't play well with cursorline when in vimdiff mode, so disable
+" it in that case
+if !&diff
+    " Highlight the current line
+    set cursorline
+endif
 
 " Gruvbox colorscheme options
 let g:gruvbox_contrast_dark="soft"
@@ -342,14 +346,14 @@ let g:tagbar_type_scala = {
     \ 'ctagstype' : 'Scala',
     \ 'kinds'     : [
         \ 'p:packages:1',
-        \ 'V:values:1',
-        \ 'v:variables:1',
-        \ 'T:types:1',
-        \ 't:traits:1',
-        \ 'o:objects:1',
-        \ 'a:aclasses:1',
-        \ 'c:classes:1',
-        \ 'r:cclasses:1',
+        \ 'V:values',
+        \ 'v:variables',
+        \ 'T:types',
+        \ 't:traits',
+        \ 'o:objects',
+        \ 'a:aclasses',
+        \ 'c:classes',
+        \ 'r:cclasses',
         \ 'm:methods'
     \ ]
 \ }
