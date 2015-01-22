@@ -127,6 +127,7 @@ nnoremap <Leader>L <C-w>L
 
 nnoremap <Leader>, <C-w>>
 nnoremap <Leader>. <C-w><
+nnoremap <Leader>. <C-w><
 nnoremap <Leader>- <C-w>-
 nnoremap <Leader>= <C-w>+
 
@@ -169,8 +170,15 @@ if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
 
+nnoremap <Leader>0 :RainbowParenthesesToggle<CR>
+" au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+
 " If editing a scala file, set the makeprg to compile with maven
-au BufNewFile,BufRead *.scala set makeprg=mvn\ clean\ install
+au BufNewFile,BufRead *.scala set makeprg=mvn\ compile
+nnoremap <Leader>m :make<CR>
 
 " Use Honza's snippets, not default ones
 let g:neosnippet#disable_runtime_snippets = { "_": 1, }
