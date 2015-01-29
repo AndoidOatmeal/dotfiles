@@ -104,12 +104,11 @@ set autoread
 let mapleader = " "
 
 " Useful shortcuts with leader
-nnoremap <leader>t :TagbarToggle<cr>
+nnoremap <leader>T :TagbarToggle<cr>
 nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>p :CtrlP<CR>
 nnoremap <Leader>P :CtrlP ~/pt-software/<CR>
-nnoremap <Leader>c :copen<CR>
-nnoremap <Leader>C :cclose<CR>
+nnoremap <leader>t :CtrlPTag<cr>
 nnoremap <Leader>i :set invnumber<CR>
 nnoremap <Leader><TAB> <C-w><C-w>
 nnoremap <Leader>T :HardTimeToggle<CR>
@@ -117,7 +116,7 @@ nnoremap <Leader>h <C-w>h
 nnoremap <Leader>j <C-w>j
 nnoremap <Leader>k <C-w>k
 nnoremap <Leader>l <C-w>l
-
+nnoremap <leader>c :!ctags -R $(git rev-parse --show-toplevel)<CR>
 vnoremap <Leader>s :w !scala
 
 nnoremap <Leader>H <C-w>H
@@ -162,13 +161,13 @@ xmap <C-k>     <Plug>(neosnippet_expand_target)
 " Toggle relative line numbers
 nnoremap <silent><C-l> :set relativenumber!<cr>
 
-" Don't automatically change vim's cwd (it messes up Ag and grep)
-set noautochdir
-
 " For snippet_complete marker.
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
+
+set matchtime=2
+set scrolloff=2
 
 nnoremap <Leader>0 :RainbowParenthesesToggle<CR>
 " au VimEnter * RainbowParenthesesToggle
@@ -252,11 +251,11 @@ set background=dark
 colorscheme gruvbox
 
 " Bold the cursor linenumber
-hi scalaDef cterm=bold
-hi scalaClass cterm=bold
-hi scalaObject cterm=bold
-hi scalaTrait cterm=bold
-hi CursorLineNR cterm=bold
+highlight scalaDef cterm=bold
+highlight scalaClass cterm=bold
+highlight scalaObject cterm=bold
+highlight scalaTrait cterm=bold
+highlight CursorLineNR cterm=bold
 
 " Use tabs instead of spaces
 set tabstop=4
@@ -337,7 +336,7 @@ set smartcase
 set history=1000
 
 " Show “invisible” characters
-set listchars=tab:▸\ ,trail:·,eol:¬,nbsp:_
+set listchars=tab:▸\ ,trail:·,eol:¬,nbsp:_,extends:…
 set list
 
 " Highlighting of various characters
