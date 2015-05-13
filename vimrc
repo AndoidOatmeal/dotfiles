@@ -111,12 +111,11 @@ nnoremap <Leader>P :CtrlP ~/pt-software/<CR>
 nnoremap <leader>t :CtrlPTag<cr>
 nnoremap <Leader>i :set invnumber<CR>
 nnoremap <Leader><TAB> <C-w><C-w>
-nnoremap <Leader>T :HardTimeToggle<CR>
 nnoremap <Leader>h <C-w>h
 nnoremap <Leader>j <C-w>j
 nnoremap <Leader>k <C-w>k
 nnoremap <Leader>l <C-w>l
-nnoremap <leader>c :!ctags -R $(git rev-parse --show-toplevel)<CR>
+nnoremap <leader>c :!ctags -R $(git rev-parse --show-toplevel) && echo "Done generating ctags"<CR>
 vnoremap <Leader>s :w !scala
 
 nnoremap <Leader>H <C-w>H
@@ -170,7 +169,7 @@ set matchtime=2
 set scrolloff=2
 
 nnoremap <Leader>0 :RainbowParenthesesToggle<CR>
-" au VimEnter * RainbowParenthesesToggle
+au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
@@ -283,6 +282,9 @@ nnoremap : ;
 nnoremap ; :
 vnoremap ; :
 vnoremap : ;
+
+" visually select the last paste or change
+nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 " * * * * * * * * * * * * * * * * *
 " CtrlP plugin settings
