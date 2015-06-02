@@ -181,6 +181,9 @@ nnoremap <Leader>m :make<CR>
 " Map Q to executing the q macro
 nnoremap Q @q
 
+" Allow backspacing beyond start of insert mode
+set backspace=indent,eol,start
+
 " # # # # # Airline config # # # # #
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
