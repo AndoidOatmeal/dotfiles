@@ -14,11 +14,6 @@ Plugin 'gmarik/Vundle.vim'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 
-" Provides keyword completion system by maintaining a cache of keywords in the current buffer
-Plugin 'Shougo/neocomplete.vim'
-Plugin 'Shougo/neosnippet-snippets'
-Plugin 'Shougo/neosnippet.vim'
-
 " Automatically end certain programming structures automatically like
 Plugin 'tpope/vim-endwise'
 
@@ -51,6 +46,9 @@ Plugin 'elzr/vim-json'
 
 " Full path fuzzy file, buffer, mru, tag, finder for Vim
 Plugin 'kien/ctrlp.vim'
+
+" Autocompletion
+Plugin 'Valloric/YouCompleteMe'
 
 " Provides an easy way to browse the tags of the current file and get an overview of its structure
 Plugin 'majutsushi/tagbar'
@@ -156,24 +154,11 @@ nnoremap <silent> <LEFT> :cprev<CR>
 
 nnoremap <Leader>g :GundoToggle<CR>
 
-" Neocomplete settings
-let g:neocomplete#enable_at_startup = 1
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "<TAB>"
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-" Plugin key-mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
-
 " Toggle relative line numbers
 nnoremap <silent><C-l> :set relativenumber!<cr>
+
+" YCM's identifier completer will also collect identifiers from tags files
+let g:ycm_collect_identifiers_from_tags_files = 1
 
 " For snippet_complete marker.
 if has('conceal')
@@ -193,14 +178,6 @@ au Syntax * RainbowParenthesesLoadBraces
 au BufNewFile,BufRead *.scala set makeprg=mvn\ test
 nnoremap <Leader>m :make<CR>
 
-" Use Honza's snippets, not default ones
-let g:neosnippet#disable_runtime_snippets = { "_": 1, }
-" Enable snipMate compatibility feature.
-let g:neosnippet#enable_snipmate_compatibility = 1
-
-" Tell Neosnippet about the other snippets
-let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
-
 " Map Q to executing the q macro
 nnoremap Q @q
 
@@ -208,9 +185,6 @@ nnoremap Q @q
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#show_buffers = 0
-
-" Start neocomplete
-let g:neocomplete#enable_at_startup = 1
 
 " Don't wrap text by default
 set nowrap
