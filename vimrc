@@ -113,7 +113,7 @@ let mapleader = " "
 " Useful shortcuts with leader
 nnoremap <leader>T :TagbarToggle<cr>
 nnoremap <leader>n :NERDTreeToggle<CR>
-nnoremap <Leader>o :CtrlP<CR>
+nnoremap <Leader>p :CtrlP<CR>
 nnoremap <leader>t :CtrlPTag<cr>
 nnoremap <Leader>i :set invnumber<CR>
 nnoremap <Leader><TAB> <C-w><C-w>
@@ -123,13 +123,6 @@ nnoremap <Leader>k <C-w>k
 nnoremap <Leader>l <C-w>l
 nnoremap <leader>c :!ctags -R $(git rev-parse --show-toplevel) && echo "Done generating ctags"<CR>
 vnoremap <Leader>s :w !scala
-
-vmap <Leader>y "*y
-vmap <Leader>d "*d
-nmap <Leader>p "*p
-nmap <Leader>P "*P
-vmap <Leader>p "*p
-vmap <Leader>P "*P
 
 nnoremap <Leader>H <C-w>H
 nnoremap <Leader>J <C-w>J
