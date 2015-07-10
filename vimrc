@@ -177,6 +177,9 @@ nnoremap Q @q
 " Allow backspacing beyond start of insert mode
 set backspace=indent,eol,start
 
+" Don't take over the current tab when using make
+set switchbuf=useopen,usetab,newtab
+
 " # # # # # Airline config # # # # #
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
