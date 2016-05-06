@@ -14,6 +14,14 @@ Plugin 'gmarik/Vundle.vim'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 
+" Plugin for easier Ruby on Rails development
+Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-bundler'
+Plugin 'vim-ruby/vim-ruby'
+
+" Auto adjusting indentation
+Plugin 'tpope/vim-sleuth'
+
 " Automatically end certain programming structures automatically like
 Plugin 'tpope/vim-endwise'
 
@@ -48,7 +56,8 @@ Plugin 'elzr/vim-json'
 Plugin 'kien/ctrlp.vim'
 
 " Autocompletion
-Plugin 'Valloric/YouCompleteMe'
+" Disabling this until it stops vim from segfaulting
+" Plugin 'Valloric/YouCompleteMe'
 
 " Provides an easy way to browse the tags of the current file and get an overview of its structure
 Plugin 'majutsushi/tagbar'
@@ -113,6 +122,7 @@ let mapleader = " "
 " Useful shortcuts with leader
 nnoremap <leader>T :TagbarToggle<cr>
 nnoremap <leader>n :NERDTreeToggle<CR>
+nnoremap <leader>r :Rake<CR>
 nnoremap <Leader>p :CtrlP<CR>
 nnoremap <leader>t :CtrlPTag<cr>
 nnoremap <Leader>i :set invnumber<CR>
@@ -168,17 +178,15 @@ au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
 " If editing a scala file, set the makeprg to compile with maven
-au BufNewFile,BufRead *.scala set makeprg=mvn\ test
-nnoremap <Leader>m :make<CR>
+au BufNewFile,BufRead *.scala set makeprg=mvn
+nnoremap <Leader>m :make test<CR>
+nnoremap <Leader>M :make integration-test<CR>
 
 " Map Q to executing the q macro
 nnoremap Q @q
 
 " Allow backspacing beyond start of insert mode
 set backspace=indent,eol,start
-
-" Don't take over the current tab when using make
-set switchbuf=useopen,usetab,newtab
 
 " # # # # # Airline config # # # # #
 let g:airline#extensions#tabline#enabled = 1
@@ -217,9 +225,6 @@ set relativenumber
 set showmatch
 syntax on
 
-" Override scala.vim's tabstop of 2 spaces
-au BufNewFile,BufRead *.scala set sw=4
-
 " associate *.foo with php filetype
 au BufRead,BufNewFile *.hql setfiletype sql
 
@@ -252,11 +257,18 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 
+" Override scala.vim's tabstop of 2 spaces
+au BufNewFile,BufRead *.scala set sw=4
+au BufNewFile,BufRead *.cpp set shiftwidth=4 tabstop=4
+
+" au BufNewFile,BufRead *.rb set shiftwidth=2 tabstop=2
+" au BufNewFile,BufRead Gemfile set shiftwidth=2 tabstop=2
+
 " Periodic backups
 set backup
 set backupdir=~/.vim/backup
-set undodir=~/.vim/backup
 set undofile
+set undodir=~/.vim/undo
 set directory=~/.vim/tmp
 
 " Split correctly
@@ -335,6 +347,9 @@ set list
 " Highlighting of various characters
 highlight NonText ctermfg=grey guifg=grey ctermbg=NONE guibg=NONE
 highlight SpecialKey ctermfg=grey guifg=grey ctermbg=NONE guibg=NONE
+
+" Backspace deletes like most programs in insert mode
+set backspace=2
 
 " Incremental, highlighted search
 set incsearch
