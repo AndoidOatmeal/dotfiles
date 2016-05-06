@@ -19,15 +19,13 @@ Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-bundler'
 Plugin 'vim-ruby/vim-ruby'
 
-" Auto adjusting indentation
-Plugin 'tpope/vim-sleuth'
-
 " Automatically end certain programming structures automatically like
 Plugin 'tpope/vim-endwise'
 
 " Contains additional snippets files for various programming languages
 Plugin 'honza/vim-snippets'
 
+" Rust support
 Plugin 'rust-lang/rust.vim'
 
 " Solarized color scheme
@@ -56,8 +54,7 @@ Plugin 'elzr/vim-json'
 Plugin 'kien/ctrlp.vim'
 
 " Autocompletion
-" Disabling this until it stops vim from segfaulting
-" Plugin 'Valloric/YouCompleteMe'
+Plugin 'Valloric/YouCompleteMe'
 
 " Provides an easy way to browse the tags of the current file and get an overview of its structure
 Plugin 'majutsushi/tagbar'
@@ -88,6 +85,9 @@ Plugin 'tpope/vim-eunuch'
 
 " Powerful git wrapper for vim
 Plugin 'tpope/vim-fugitive'
+
+" Use . to repeat plugin commans
+Plugin 'tpope/vim-repeat'
 
 " Operators for deleting, changing, and adding surroundings like parens, brackets, etc.
 Plugin 'tpope/vim-surround'
@@ -132,7 +132,6 @@ nnoremap <Leader>j <C-w>j
 nnoremap <Leader>k <C-w>k
 nnoremap <Leader>l <C-w>l
 nnoremap <leader>c :!ctags -R $(git rev-parse --show-toplevel) && echo "Done generating ctags"<CR>
-vnoremap <Leader>s :w !scala
 
 nnoremap <Leader>H <C-w>H
 nnoremap <Leader>J <C-w>J
@@ -157,9 +156,6 @@ nnoremap <silent> <LEFT> :cprev<CR>
 
 nnoremap <Leader>g :GundoToggle<CR>
 
-" Toggle relative line numbers
-nnoremap <silent><C-l> :set relativenumber!<cr>
-
 " YCM's identifier completer will also collect identifiers from tags files
 let g:ycm_collect_identifiers_from_tags_files = 1
 
@@ -178,9 +174,9 @@ au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
 " If editing a scala file, set the makeprg to compile with maven
-au BufNewFile,BufRead *.scala set makeprg=mvn
+au BufNewFile,BufRead *.scala set makeprg=sbt
 nnoremap <Leader>m :make test<CR>
-nnoremap <Leader>M :make integration-test<CR>
+nnoremap <Leader>M :make compile<CR>
 
 " Map Q to executing the q macro
 nnoremap Q @q
@@ -228,13 +224,6 @@ syntax on
 " associate *.foo with php filetype
 au BufRead,BufNewFile *.hql setfiletype sql
 
-" Gruvbox doesn't play well with cursorline when in vimdiff mode, so disable
-" it in that case
-if !&diff
-    " Highlight the current line
-    set cursorline
-endif
-
 " Gruvbox colorscheme options
 let g:gruvbox_contrast_dark="soft"
 
@@ -258,11 +247,8 @@ set shiftwidth=4
 set expandtab
 
 " Override scala.vim's tabstop of 2 spaces
-au BufNewFile,BufRead *.scala set sw=4
+au BufNewFile,BufRead *.scala set shiftwidth=4 tabstop=4
 au BufNewFile,BufRead *.cpp set shiftwidth=4 tabstop=4
-
-" au BufNewFile,BufRead *.rb set shiftwidth=2 tabstop=2
-" au BufNewFile,BufRead Gemfile set shiftwidth=2 tabstop=2
 
 " Periodic backups
 set backup
@@ -319,6 +305,11 @@ let g:ctrlp_working_path_mode = 'acr'
 let g:ctrlp_match_window_bottom = 1
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class,*.tar.gz,*.tgz,*.tar,*.gzip,*.jar
+
+" use emacs-style tab completion when selecting files, etc
+set wildmode=longest,list
+" make tab completion for files/buffers act like bash
+set wildmenu
 
 " Always show status line
 set laststatus=2
