@@ -64,9 +64,6 @@ alias hg='history | grep'
 # Tmux use 256 colors
 alias tmux='tmux -2'
 
-# Show top files in a given directory
-alias ducks='du -ckhs * | sort -rh | head'
-
 # Cd aliases
 alias ....='cd ../../../'
 alias .....='cd ../../../../'
@@ -83,7 +80,6 @@ alias clear='echo "Dont use clear, use <ctrl-l> instead."'
 
 alias unzipall='for zip in *.zip;do mkdir -p ${zip%.zip};unzip $zip -d ${zip%.zip}; done'
 
-alias jack-vids-sync="rsync -avP ~/Dropbox/Camera\ Uploads\ \(1\)/*.mp4 'dragonstone:/data/Media/Home\ Videos/daves-and-jens-dropbox'"
-alias jack-pics-sync="rsync -avP /Users/andrew/Dropbox/Camera\ Uploads\ \(1\)/2015*.jpg 'dragonstone:/data/Media/Photos/daves-and-jens-dropbox'"
+alias plexbackup='rsync -avPz dragonstone:/apps/plexmediaserver/MediaLibrary/"Plex\ Media\ Server/Plug-in\ Support" ~/Documents/Plex\ Data\ Backups'
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
