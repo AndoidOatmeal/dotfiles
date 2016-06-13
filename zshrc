@@ -82,4 +82,6 @@ alias unzipall='for zip in *.zip;do mkdir -p ${zip%.zip};unzip $zip -d ${zip%.zi
 
 alias plexbackup='rsync -avPz dragonstone:/apps/plexmediaserver/MediaLibrary/"Plex\ Media\ Server/Plug-in\ Support" ~/Documents/Plex\ Data\ Backups'
 
+export HOMEBREW_NO_ANALYTICS=1
+
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
