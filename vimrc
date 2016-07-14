@@ -50,6 +50,9 @@ Plugin 'derekwyatt/vim-scala'
 " Better JSON syntax coloring
 Plugin 'elzr/vim-json'
 
+" Async vim compiling with tmux
+Plugin 'tpope/vim-dispatch'
+
 " Full path fuzzy file, buffer, mru, tag, finder for Vim
 Plugin 'kien/ctrlp.vim'
 
@@ -173,10 +176,9 @@ au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
-" If editing a scala file, set the makeprg to compile with maven
-au BufNewFile,BufRead *.scala set makeprg=sbt
-nnoremap <Leader>m :make test<CR>
-nnoremap <Leader>M :make compile<CR>
+" If editing a scala file, set the makeprg to compile with gradle
+au BufNewFile,BufRead *.scala set makeprg=gradle\ test\ --console=plain
+nnoremap <Leader>m :Make<CR>
 
 " Map Q to executing the q macro
 nnoremap Q @q
@@ -220,9 +222,6 @@ set number
 set relativenumber
 set showmatch
 syntax on
-
-" associate *.foo with php filetype
-au BufRead,BufNewFile *.hql setfiletype sql
 
 " Gruvbox colorscheme options
 let g:gruvbox_contrast_dark="soft"
@@ -377,6 +376,9 @@ let g:vim_json_syntax_conceal = 0
 " Create a command for formatting pipe delimited files
 command Pipef execute "%!column -s '|' -t"
 command Tabf execute "%!column -s '\t' -t"
+
+" Format json
+command Jpy execute "%!python -m 'json.tool'"
 
 " Use sudo to write the file even if vim wasn't run with sudo
 command Swrite execute "w !sudo tee > /dev/null %"
