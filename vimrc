@@ -134,7 +134,9 @@ nnoremap <Leader>h <C-w>h
 nnoremap <Leader>j <C-w>j
 nnoremap <Leader>k <C-w>k
 nnoremap <Leader>l <C-w>l
-nnoremap <leader>c :!ctags -R $(git rev-parse --show-toplevel) && echo "Done generating ctags"<CR>
+nnoremap <leader>c :!ctags -R $(git rev-parse --show-toplevel) && echo "Done generating ctags for nearest git directory"<CR>
+nnoremap <leader>C :!ctags -R . && echo "Done generating ctags for current directory"<CR>
+nnoremap <Leader>m :Make<CR>
 
 nnoremap <Leader>H <C-w>H
 nnoremap <Leader>J <C-w>J
@@ -177,8 +179,10 @@ au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
 " If editing a scala file, set the makeprg to compile with gradle
-au BufNewFile,BufRead *.scala set makeprg=gradle\ test\ --console=plain
-nnoremap <Leader>m :Make<CR>
+au BufNewFile,BufRead *.scala set makeprg=gradle\ test\ --console=plain\ --offline
+
+let g:scala_sort_across_groups=1
+let g:scala_first_party_namespaces='com\.metabiota'
 
 " Map Q to executing the q macro
 nnoremap Q @q
@@ -246,7 +250,7 @@ set shiftwidth=4
 set expandtab
 
 " Override scala.vim's tabstop of 2 spaces
-au BufNewFile,BufRead *.scala set shiftwidth=4 tabstop=4
+au BufNewFile,BufRead *.scala set shiftwidth=2 tabstop=2
 au BufNewFile,BufRead *.cpp set shiftwidth=4 tabstop=4
 
 " Periodic backups
