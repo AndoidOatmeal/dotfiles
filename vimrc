@@ -171,6 +171,7 @@ endif
 
 set matchtime=2
 set scrolloff=2
+set cursorline
 
 nnoremap <Leader>0 :RainbowParenthesesToggle<CR>
 au VimEnter * RainbowParenthesesToggle
@@ -229,6 +230,7 @@ syntax on
 
 " Gruvbox colorscheme options
 let g:gruvbox_contrast_dark="soft"
+let g:gruvbox_contrast_light="medium"
 
 " Gruvbox's italics go wonky outside of the GUI vim
 if !has("gui_running")
@@ -237,12 +239,15 @@ endif
 set background=dark
 colorscheme gruvbox
 
+
 " Bold the cursor linenumber
 highlight scalaDef cterm=bold
 highlight scalaClass cterm=bold
 highlight scalaObject cterm=bold
 highlight scalaTrait cterm=bold
 highlight CursorLineNR cterm=bold
+highlight LineNr ctermfg=DarkGrey ctermbg=Black
+" highlight CursorLine ctermbg=Black
 
 " Use tabs instead of spaces
 set tabstop=4
