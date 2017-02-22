@@ -22,15 +22,6 @@ Plugin 'vim-ruby/vim-ruby'
 " Automatically end certain programming structures automatically like
 Plugin 'tpope/vim-endwise'
 
-" Contains additional snippets files for various programming languages
-Plugin 'honza/vim-snippets'
-
-" Rust support
-Plugin 'rust-lang/rust.vim'
-
-" Solarized color scheme
-Plugin 'altercation/vim-colors-solarized'
-
 " Misc. colorschemes
 Plugin 'chrishunt/color-schemes'
 Plugin 'chriskempson/base16-vim'
@@ -44,6 +35,8 @@ Plugin 'bronson/vim-visual-star-search'
 " Lightweight vim status bar
 Plugin 'bling/vim-airline'
 
+Plugin 'elixir-lang/vim-elixir'
+
 " Scala syntax and defaults for the scala language
 Plugin 'derekwyatt/vim-scala'
 
@@ -54,6 +47,7 @@ Plugin 'elzr/vim-json'
 Plugin 'tpope/vim-dispatch'
 
 " Full path fuzzy file, buffer, mru, tag, finder for Vim
+" Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'kien/ctrlp.vim'
 
 " Autocompletion
@@ -119,6 +113,10 @@ set timeout
 set timeoutlen=3000
 set ttimeoutlen=100
 
+" A workaround for tmux 2.3 + dispatch
+" set shellpipe+=\ 
+set shellpipe=2>&1\|\ tee\ 
+
 " Setting the leader to space
 let mapleader = " "
 
@@ -134,9 +132,10 @@ nnoremap <Leader>h <C-w>h
 nnoremap <Leader>j <C-w>j
 nnoremap <Leader>k <C-w>k
 nnoremap <Leader>l <C-w>l
-nnoremap <leader>c :!ctags -R $(git rev-parse --show-toplevel) && echo "Done generating ctags for nearest git directory"<CR>
-nnoremap <leader>C :!ctags -R . && echo "Done generating ctags for current directory"<CR>
+nnoremap <leader>c :!ctags --fields=+l -R $(git rev-parse --show-toplevel) && echo "Done generating ctags for nearest git directory"<CR>
+nnoremap <leader>C :!ctags --fields=+l -R . && echo "Done generating ctags for current directory"<CR>
 nnoremap <Leader>m :Make<CR>
+" nnoremap <Leader>m :make<CR>
 
 nnoremap <Leader>H <C-w>H
 nnoremap <Leader>J <C-w>J
@@ -180,7 +179,13 @@ au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
 " If editing a scala file, set the makeprg to compile with gradle
-au BufNewFile,BufRead *.scala set makeprg=gradle\ test\ --console=plain\ --offline
+" au BufNewFile,BufRead *.scala set makeprg=gradle\ test\ --console=plain\ --offline
+au BufNewFile,BufRead *.scala set makeprg=sbt\ test\ -Djline.terminal=jline.UnsupportedTerminal
+
+
+set errorformat=%E\ %#[error]\ %#%f:%l:\ %m,%-Z\ %#[error]\ %p^,%-C\ %#[error]\ %m
+set errorformat+=,%W\ %#[warn]\ %#%f:%l:\ %m,%-Z\ %#[warn]\ %p^,%-C\ %#[warn]\ %m
+set errorformat+=,%-G%.%#
 
 let g:scala_sort_across_groups=1
 let g:scala_first_party_namespaces='com\.metabiota'
@@ -247,11 +252,12 @@ highlight scalaObject cterm=bold
 highlight scalaTrait cterm=bold
 highlight CursorLineNR cterm=bold
 highlight LineNr ctermfg=DarkGrey ctermbg=Black
-" highlight CursorLine ctermbg=Black
+
+set fillchars=vert:│
 
 " Use tabs instead of spaces
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set expandtab
 
 " Override scala.vim's tabstop of 2 spaces
@@ -346,6 +352,7 @@ set list
 " Highlighting of various characters
 highlight NonText ctermfg=grey guifg=grey ctermbg=NONE guibg=NONE
 highlight SpecialKey ctermfg=grey guifg=grey ctermbg=NONE guibg=NONE
+hi VertSplit ctermbg=NONE guibg=NONE
 
 " Backspace deletes like most programs in insert mode
 set backspace=2

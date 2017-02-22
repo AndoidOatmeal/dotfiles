@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/andrew/.oh-my-zsh
+export ZSH=/Users/andrewaunelle/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -18,6 +18,7 @@ alias tmuxreload="tmux source-file ~/.tmux.conf"
 alias sshconf="vim ~/.ssh/config"
 alias svim="sudo vim"
 alias simpledate="date '+%Y%m%d'"
+alias pm='python manage.py'
 
 
 function add_ssh_key() {
@@ -53,7 +54,12 @@ bindkey '\e[B' history-substring-search-down
 # Update to gruvbox color palette for each shell
 ~/.vim/bundle/gruvbox/gruvbox_256palette_osx.sh
 
-archey -c
+archey --nocolor | lolcat
+fortune | lolcat
+
+export WORKON_HOME=~/.virtualenvs
+export VIRTUALENVWRAPPER_PYTHON='/usr/local/bin/python3'
+source /usr/local/bin/virtualenvwrapper.sh
 
 # Show slashes after ls directories
 alias ls='ls -Gph'
@@ -80,6 +86,7 @@ alias clear='echo "Dont use clear, use <ctrl-l> instead."'
 
 alias unzipall='for zip in *.zip;do mkdir -p ${zip%.zip};unzip $zip -d ${zip%.zip}; done'
 
+# TODO move this to a script in ~/bin so that it doesn't appear online
 alias plexbackup='rsync -avPz dragonstone:/apps/plexmediaserver/MediaLibrary/"Plex\ Media\ Server/Plug-in\ Support" ~/Documents/Plex\ Data\ Backups'
 
 export HOMEBREW_NO_ANALYTICS=1
@@ -99,3 +106,13 @@ man() {
     LESS_TERMCAP_us=$(printf "\e[1;32m") \
     man "$@"
 }
+
+alias dj="python manage.py"
+alias djdd="python manage.py dumpdata"
+alias djld="python manage.py loaddata"
+alias djm="python manage.py migrate"
+alias djsh="python manage.py shell"
+alias djsm="python manage.py schemamigration"
+alias djs="python manage.py syncdb --noinput"
+alias djt="python manage.py test"
+alias djrs="python manage.py runserver"
