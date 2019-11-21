@@ -1,5 +1,6 @@
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/andrew/.oh-my-zsh
+export ZSH_CUSTOM=/Users/andrew/dotfiles/zsh_custom
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -9,7 +10,8 @@ ZSH_THEME="castle-black"
 
 setopt extended_glob
 
-# Example aliases
+# Aliases
+alias gc="cd ~/Projects/groupcollect/groupcollect"
 alias zshrc="vim ~/.zshrc"
 alias zshreload="source ~/.zshrc"
 alias vimrc="vim ~/.vimrc"
@@ -25,10 +27,11 @@ alias hd="cd ~/Projects/sparta/half_dome"
 alias vf="cd ~/Projects/sparta/vernal_falls"
 alias fp="cd ~/Projects/sparta/faux_plate"
 
+alias s="mix phx.server"
+
 alias updateall="brew update && brew upgrade && vim +PluginUpdate +qall"
 
 export ICLOUD=~/Library/Mobile\ Documents/com~apple~CloudDocs
-
 
 function add_ssh_key() {
     local key_prefix="$1"
@@ -41,6 +44,16 @@ function add_ssh_key() {
         ssh-add -t 12h "$key_path"
         echo "Done"
     fi
+}
+
+function alert() {
+  if [ $? -eq 0 ]; then
+    echo "alert: success"
+    afplay /System/Library/Sounds/Glass.aiff
+  else
+    echo "alert: failure" >&2
+    afplay /System/Library/Sounds/Basso.aiff
+  fi
 }
 
 alias addkey='add_ssh_key'
@@ -62,14 +75,6 @@ bindkey '\e[B' history-substring-search-down
 
 # Update to gruvbox color palette for each shell
 ~/.vim/bundle/gruvbox/gruvbox_256palette_osx.sh
-
-# archey --color --offline | lolcat
-# fortune | lolcat
-archey --color --offline
-fortune
-
-export WORKON_HOME=~/.virtualenvs
-VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3 source /usr/local/bin/virtualenvwrapper.sh
 
 # Show slashes after ls directories
 alias ls='ls -Gph'
@@ -116,4 +121,16 @@ man() {
     LESS_TERMCAP_us=$(printf "\e[1;32m") \
     man "$@"
 }
+
+eval "$(rbenv init -)"
 eval "$(direnv hook zsh)"
+
+archey --color --offline | lolcat
+fortune | lolcat
+
+# Project specific aliases
+alias shipit='mix dev.shipit'
+
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash
+export PATH="/usr/local/opt/postgresql@10/bin:$PATH"

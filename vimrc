@@ -68,9 +68,6 @@ Plugin 'scrooloose/nerdtree'
 " Easily navigate vim's undo tree visually
 Plugin 'sjl/gundo.vim'
 
-" Helps break the habit of spamming 'jjjjj', 'kkkkk', etc.
-Plugin 'takac/vim-hardtime'
-
 " Press <C-G>c in insert mode to get a temporary software caps lock
 Plugin 'tpope/vim-capslock'
 
